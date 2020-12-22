@@ -19,6 +19,7 @@ public class PlayerState : MonoBehaviour
         {
             Die();
         }
+        SetAnimation();
     }
 
     private void EnableBonesRigidBody()
@@ -36,5 +37,21 @@ public class PlayerState : MonoBehaviour
             animator.enabled = false;
             rb.isKinematic = false;
         }
+    }
+
+    private void SetAnimation() {
+        if(PlayerMoveController.speed == 0) {
+            SetBoolToAnimator(true,false,false);
+        } else if(PlayerMoveController.speed == 4) {
+            SetBoolToAnimator(false, true, false);
+        } else if(PlayerMoveController.speed == 7) {
+            SetBoolToAnimator(false, false, true);
+        }
+    }
+
+    private void SetBoolToAnimator(bool IsIdle,bool IsWalking,bool IsRuning) {
+        animator.SetBool("IsIdle", IsIdle);
+        animator.SetBool("IsWalking", IsWalking);
+        animator.SetBool("IsRuning", IsRuning);
     }
 }
