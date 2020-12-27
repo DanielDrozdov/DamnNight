@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMoveController : MonoBehaviour {
     public FixedJoystick joystick;
-    public static float speed { get; private set; }
+    public static int speed { get; private set; }
     private CharacterController _characterController;
-    private float _shiftSpeed = 7f;
-    private float _defaultSpeed = 4f;
+    private int _shiftSpeed = 7;
+    private int _defaultSpeed = 4;
 
 
     public static float totalStamina { get; private set; }

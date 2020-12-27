@@ -20,6 +20,7 @@ public class CameraFPSController : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public Transform Camera;
     public Transform Player;
+    public Transform FlashLight;
 
     private void Start() {
         minimumVert = -maxVertDegrees;
@@ -41,6 +42,7 @@ public class CameraFPSController : MonoBehaviour, IPointerDownHandler, IPointerU
         }
         CalculateXRotation(TouchDist.x);
         CalculateYRotation(TouchDist.y);
+        SetFlashLightRotation();
     }
 
     public void OnPointerDown(PointerEventData eventData) {
@@ -65,4 +67,7 @@ public class CameraFPSController : MonoBehaviour, IPointerDownHandler, IPointerU
         Camera.rotation = Quaternion.Lerp(Camera.rotation, Quaternion.Euler(_rotationX, _rotationY, 0), 1);
     }
 
+    private void SetFlashLightRotation() {
+        FlashLight.rotation = Quaternion.Lerp(FlashLight.rotation, Quaternion.Euler(FlashLight.rotation.x + _rotationX, _rotationY, 0), 1);
+    }
 }

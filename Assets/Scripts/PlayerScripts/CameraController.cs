@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour{
-    private float sensivity = 0.3f;
+    private float sensivity = 4;
     public readonly float maxVertDegrees = 60f;
     private float minimumVert;
     private float maximumVert;
@@ -11,11 +11,12 @@ public class CameraController : MonoBehaviour{
     private float _rotationY = 0;
 
     public Transform Camera;
+    public Transform FlashLight;
 
     private bool IsEditor;
     void Start() {
         minimumVert = -maxVertDegrees;
-        maximumVert = maxVertDegrees;
+        maximumVert = maxVertDegrees - 10f;
 
         Rigidbody body = GetComponent<Rigidbody>();
         if(body != null)
@@ -24,7 +25,6 @@ public class CameraController : MonoBehaviour{
 
 #if UNITY_EDITOR
         IsEditor = true;
-        sensivity = 4f;
 #endif
 
     }
@@ -33,6 +33,7 @@ public class CameraController : MonoBehaviour{
         if(IsEditor) {
             CalculateXRotation(Input.GetAxis("Mouse X"));
             CalculateYRotation(Input.GetAxis("Mouse Y"));
+            SetFlashLightRotation();
         }
     }
 
@@ -47,4 +48,8 @@ public class CameraController : MonoBehaviour{
         _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
         Camera.rotation = Quaternion.Lerp(Camera.rotation, Quaternion.Euler(_rotationX, _rotationY, 0), 1);
     }
+
+    private void SetFlashLightRotation() {
+        FlashLight.rotation = Quaternion.Lerp(FlashLight.rotation, Quaternion.Euler(FlashLight.rotation.x + _rotationX, _rotationY, 0), 1);
     }
+}
