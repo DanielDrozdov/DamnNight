@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveController : MonoBehaviour {
+
     public FixedJoystick joystick;
+    private float inactiveMoveZone = 0.2f;
+
     public static int speed { get; private set; }
     private CharacterController _characterController;
     private int _shiftSpeed = 7;
     private int _defaultSpeed = 4;
-
 
     public static float totalStamina { get; private set; }
     public static float staminaReserv { get; private set; } = 45f;
@@ -23,13 +25,14 @@ public class PlayerMoveController : MonoBehaviour {
     }
 
     void Update() {
-        Vector3 moveDir = transform.TransformDirection(new Vector3(joystick.Direction.x, -9.8f, joystick.Direction.y));
-        if(joystick.Direction.y > 0.75f && !HasNotStamina) {
-            speed = _shiftSpeed;
-            totalStamina -= _staminaShiftCost * Time.deltaTime;
-        } else if(joystick.Direction.y == 0) {
+        Vector3 moveDir = transform.TransformDirection(new Vector3(joystick.Direction.x, 0, joystick.Direction.y));
+        if(joystick.Direction.y <= inactiveMoveZone && joystick.Direction.y >= -inactiveMoveZone &&
+            joystick.Direction.x <= inactiveMoveZone && joystick.Direction.x >= -inactiveMoveZone) {
             speed = 0;
             totalStamina += _staminaShiftCost * Time.deltaTime;
+        } else if(joystick.Direction.y > 0.75f && !HasNotStamina) {
+            speed = _shiftSpeed;
+            totalStamina -= _staminaShiftCost * Time.deltaTime;
         } else {
             speed = _defaultSpeed;
             totalStamina += _staminaRecovery * Time.deltaTime;
