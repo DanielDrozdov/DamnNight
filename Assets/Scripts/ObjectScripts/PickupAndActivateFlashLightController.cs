@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupAndActivateFlashLightController : MonoBehaviour, IPickupButtonAction {
+public class PickupAndActivateFlashLightController : PickupButtonDisableAction, IPickupButtonAction {
 
-    public GameObject playerFlashLight;
-
-    private void Start() {
-        GetComponent<PickupButtonActivateController>().buttonAction = this;
-    }
+    public GameObject playerFlashLight;    
 
     public void Pickup() {
         playerFlashLight.SetActive(true);
-        PickupButtonController.PickupButtonCtrl.DeactivateAndSetNoneMethodToButton();
         Destroy(gameObject);
+        OnDisableButtonAction();
     }
 }

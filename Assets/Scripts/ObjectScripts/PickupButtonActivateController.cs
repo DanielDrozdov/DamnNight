@@ -6,6 +6,10 @@ public class PickupButtonActivateController : MonoBehaviour
 {
     public IPickupButtonAction buttonAction;
 
+    private void Start() {
+        buttonAction = GetComponent<IPickupButtonAction>();
+    }
+
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")) {
             PickupButtonController.PickupButtonCtrl.ActivateAndSetMethodToButton(buttonAction);
@@ -19,6 +23,13 @@ public class PickupButtonActivateController : MonoBehaviour
     }
 }
 
-public interface IPickupButtonAction {
+public interface IPickupButtonAction{
      void Pickup();
 }
+
+public abstract class PickupButtonDisableAction : MonoBehaviour { 
+    public void OnDisableButtonAction() {
+        PickupButtonController.PickupButtonCtrl.DeactivateAndSetNoneMethodToButton();
+    }
+}
+

@@ -10,15 +10,10 @@ public class MonsterMoveController : MonoBehaviour
     void Start()
     {
         navMesh = GetComponent<NavMeshAgent>();
+        PickupAndActivateNoteController.OnPickupNote += MoveToNextPosition;
     }
 
-    
-    void Update()
-    {
-        MoveToNextPosition();
-    }
-
-    private void MoveToNextPosition() {
-        navMesh.destination = position.position;
+    private void MoveToNextPosition(Vector3 destination) {
+        navMesh.destination = destination;
     }
 }
