@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveController : MonoBehaviour {
+public class PlayerMoveController : PlayerGetHitEventClass {
 
     public FixedJoystick joystick;
     private float inactiveMoveZone = 0.2f;
@@ -21,11 +21,30 @@ public class PlayerMoveController : MonoBehaviour {
 
     void Start() {
         _characterController = GetComponent<CharacterController>();
-        totalStamina = staminaReserv;
+        totalStamina = staminaReserv;      
     }
 
     void Update() {
+        Move();    
+        StaminaControll();
+    }
+
+    private void StaminaControll() {
+        totalStamina = Mathf.Clamp(totalStamina, 0, staminaReserv);
+        if(totalStamina <= 0.5) {
+            HasNotStamina = true;
+        } else if(HasNotStamina && totalStamina >= _minShiftStaminaBank) {
+            HasNotStamina = false;
+        }
+    }
+
+    private void Move() {
+        CalculateDirectionAndStaminaState();
         Vector3 moveDir = transform.TransformDirection(new Vector3(joystick.Direction.x, 0, joystick.Direction.y));
+        _characterController.Move(moveDir * speed * Time.deltaTime);
+    }
+
+    private void CalculateDirectionAndStaminaState() {
         if(joystick.Direction.y <= inactiveMoveZone && joystick.Direction.y >= -inactiveMoveZone &&
             joystick.Direction.x <= inactiveMoveZone && joystick.Direction.x >= -inactiveMoveZone) {
             speed = 0;
@@ -37,16 +56,11 @@ public class PlayerMoveController : MonoBehaviour {
             speed = _defaultSpeed;
             totalStamina += _staminaRecovery * Time.deltaTime;
         }
-        StaminaControll();
-        _characterController.Move(moveDir * speed * Time.deltaTime);
     }
-
-    private void StaminaControll() {
-        totalStamina = Mathf.Clamp(totalStamina, 0, staminaReserv);
-        if(totalStamina <= 0.5) {
-            HasNotStamina = true;
-        } else if(HasNotStamina && totalStamina >= _minShiftStaminaBank) {
-            HasNotStamina = false;
-        }
+    public override void DisableAddFunctions() {
+        speed = 0;
+        totalStamina = staminaReserv;
     }
 }
+
+

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class CameraController : MonoBehaviour{
+public class CameraController : PlayerGetHitEventClass {
     private float sensivity = 4;
     public readonly float maxVertDegrees = 60f;
     private float minimumVert;

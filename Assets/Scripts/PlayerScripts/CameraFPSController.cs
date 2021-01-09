@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CameraFPSController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
+public class CameraFPSController : PlayerGetHitEventClass, IPointerDownHandler, IPointerUpHandler {
     [HideInInspector]
     public Vector2 TouchDist;
     [HideInInspector]
