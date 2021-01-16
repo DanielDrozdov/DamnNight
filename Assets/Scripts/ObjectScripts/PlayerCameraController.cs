@@ -14,7 +14,7 @@ public class PlayerCameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        animator.SetInteger("Speed", PlayerMoveController.speed);
+        animator.SetInteger("Speed", PlayerMoveController.GetSpeed());
     }
 
     private void GetHitAnim() {

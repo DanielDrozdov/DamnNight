@@ -10,14 +10,10 @@ public class StaminaBarController : MonoBehaviour
 
     private void Start() {
         StaminaBar = GetComponent<Image>();
-        _kAmountPerOneStamina = 1 / PlayerMoveController.staminaReserv;
+        _kAmountPerOneStamina = 1 / PlayerMoveController.GetStaminaReserv();
     }
 
-    private void Update() {
-        UpdateStaminaBar();
-    }
-
-    private void UpdateStaminaBar() {
-        StaminaBar.fillAmount = _kAmountPerOneStamina * PlayerMoveController.totalStamina;
+    public void UpdateStaminaBar() {
+        StaminaBar.fillAmount = _kAmountPerOneStamina * PlayerMoveController.GetTotalStamina();
     }
 }

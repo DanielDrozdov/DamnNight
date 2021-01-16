@@ -55,13 +55,15 @@ public class PlayerState : MonoBehaviour
 
 
     private void SetAnimation() {
-        if(PlayerMoveController.speed == 0) {
-            SetBoolToAnimator(true,false,false);
-        } else if(PlayerMoveController.speed == 4) {
-            SetBoolToAnimator(false, true, false);
-        } else if(PlayerMoveController.speed == 7) {
-            SetBoolToAnimator(false, false, true);
-        }
+        //PlayerMoveController.MoveState moveState = PlayerMoveController.GetPlayerMoveState();
+        //if(PlayerMoveController.MoveState.Idle == moveState) {
+        //    SetBoolToAnimator(true,false,false);
+        //} else if(PlayerMoveController.MoveState.Walk == moveState) {
+        //    SetBoolToAnimator(false, true, false);
+        //} else if(PlayerMoveController.MoveState.Run == moveState) {
+        //    SetBoolToAnimator(false, false, true);
+        //}
+        animator.SetInteger("Speed", PlayerMoveController.GetSpeed());
     }
 
     private void SetBoolToAnimator(bool IsIdle,bool IsWalking,bool IsRuning) {

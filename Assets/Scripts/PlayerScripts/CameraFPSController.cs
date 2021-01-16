@@ -22,7 +22,7 @@ public class CameraFPSController : PlayerGetHitEventClass, IPointerDownHandler, 
     public Transform Player;
     public Transform FlashLight;
 
-    private void Start() {
+    private void Start() {      
         minimumVert = -maxVertDegrees;
         maximumVert = maxVertDegrees;
     }
