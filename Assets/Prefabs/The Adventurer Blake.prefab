@@ -1198,7 +1198,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1577035751869950105}
-  - component: {fileID: 8892571218362238435}
   - component: {fileID: 2574256276403542667}
   - component: {fileID: 2574256276403542664}
   - component: {fileID: 2574256276403542668}
@@ -1227,28 +1226,10 @@ Transform:
   - {fileID: 9037094602344202007}
   - {fileID: 5758160998478993534}
   - {fileID: 6414462974919004481}
+  - {fileID: 4832424046674043452}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8892571218362238435
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2574256276403542666}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 027f00c86c565a44f865fc7c749b99e5, type: 3}
-  m_Controller: {fileID: 9100000, guid: aef11c7bb18b2754fae6531d71d9647e, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2574256276403542667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1261,6 +1242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac429802ec9b69489fb60167a66533f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DieOrWinPanelController: {fileID: 0}
+  MainCamera: {fileID: 5807520807363244170}
+  Camera: {fileID: 5807520807623497549}
+  UIPlayerCanvas: {fileID: 0}
+  EndCameraPos: {fileID: 4832424046674043452}
+  Armature: {fileID: 4126657587633187462}
+  cameraCullingMask:
+    serializedVersion: 2
+    m_Bits: 1815
   bonesRigidBody:
   - {fileID: 5807520808507512963}
   - {fileID: 5807520808056185971}
@@ -1273,7 +1263,6 @@ MonoBehaviour:
   - {fileID: 5807520806925669519}
   - {fileID: 5807520806965341974}
   - {fileID: 5807520808853610616}
-  bonesColiders: []
 --- !u!114 &2574256276403542664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,6 +1290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 0}
+  StaminaBarController: {fileID: 0}
 --- !u!143 &2574256276403542665
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2233,6 +2223,36 @@ Transform:
   m_Father: {fileID: 432037629980395020}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4524913800224922243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4832424046674043452}
+  m_Layer: 0
+  m_Name: CameraPosWhenPlayerDie
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4832424046674043452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4524913800224922243}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1577035751869950105}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4539063691820311296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,8 +2844,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 1
-  m_Antialiasing: 1
-  m_AntialiasingQuality: 2
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 0
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1

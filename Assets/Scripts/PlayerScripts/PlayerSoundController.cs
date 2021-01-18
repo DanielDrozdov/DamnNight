@@ -28,19 +28,16 @@ public class PlayerSoundController : MonoBehaviour
     }
 
     public void PlayWoodAudio() {
-        Source.clip = WoodAudio;
-        Source.Play();
+        PlayAudio(WoodAudio);
         platformEnum = PlatformEnum.Wood;
     }
 
     public void PlayGrassRunAudio() {
-        Source.clip = GrassRun;
-        Source.Play();
+        PlayAudio(GrassRun);
     }
 
     public void PlayGrassWalkAudio() {
-        Source.clip = GrassWalk;
-        Source.Play();
+        PlayAudio(GrassWalk);
     }
 
     public void ChangePlatformToNone() {
@@ -57,6 +54,11 @@ public class PlayerSoundController : MonoBehaviour
         } else {
             Source.clip = null;
         }
+    }
+
+    private void PlayAudio(AudioClip clip) {
+        Source.clip = clip;
+        Source.Play();
     }
 
 

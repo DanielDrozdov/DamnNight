@@ -7,7 +7,7 @@ using UnityEngine;
 public class LevelPasswordController : MonoBehaviour
 {   
     public static int password { get; private set; }
-    private static bool IsFullPassword;
+    private static bool isFullPassword;
     private int _passwordLength;
     private static int _collectedNotesCount;
     private static int _numberCountInNote = 2;
@@ -20,8 +20,8 @@ public class LevelPasswordController : MonoBehaviour
 
     public static void AddOneNote() {
         _collectedNotesCount++;
-        if(_collectedNotesCount == 3) {
-            IsFullPassword = true;
+        if(_collectedNotesCount == NoteSpawnController.GetNoteCount()) {
+            isFullPassword = true;
         }
         UIPasswordController.GetUIPasswordController().UpdateUIPassword(password,_collectedNotesCount,_numberCountInNote);
     }
@@ -35,7 +35,7 @@ public class LevelPasswordController : MonoBehaviour
         return Convert.ToInt32(stringBuilder.ToString());
     }
 
-    public static bool GetIsFullPassword() {
-        return IsFullPassword;
+    public static bool IsFullPassword() {
+        return isFullPassword;
     }
 }

@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
+    public DieOrWinPanelController DieOrWinPanelController;
+    public LoadSceneManager LoadSceneManager;
+    public Camera MainCamera;
+    public GameObject Camera;
+    public GameObject UIPlayerCanvas;
+    public Transform EndCameraPos;
+    public Transform Armature;
+    [SerializeField] private LayerMask cameraCullingMask;
+
     public Rigidbody[] bonesRigidBody;
-    public Collider[] bonesColiders;
-    private Animator animator;
 
     private float _lifes = 2f;
     private float _totalLifes;
@@ -17,19 +24,12 @@ public class PlayerState : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
         _totalLifes = _lifes;
     }
 
-    private void FixedUpdate()
-    {
-        SetAnimation();
-    }
-
-    private void Die() {
-        foreach(Rigidbody rb in bonesRigidBody) {
-            animator.enabled = false;
-            rb.isKinematic = false;
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.F)) {
+            Hit();
         }
     }
 
@@ -42,6 +42,24 @@ public class PlayerState : MonoBehaviour
         }
     }
 
+    private void Die() {
+        UIPlayerCanvas.SetActive(false);
+        foreach(Rigidbody rb in bonesRigidBody) {
+            rb.isKinematic = false;
+        }
+        MainCamera.gameObject.transform.position = EndCameraPos.position;
+        MainCamera.cullingMask = cameraCullingMask;
+        StartCoroutine(DelayLookAtAndDiePanel());
+    }
+
+    private IEnumerator DelayLookAtAndDiePanel() {
+        yield return new WaitForSeconds(0.5f);
+        Camera.transform.LookAt(Armature.position);
+        yield return new WaitForSeconds(3f);
+        DieOrWinPanelController.ActivateDiePanel();
+        LoadSceneManager.LoadMainMenu();
+    }
+
     private IEnumerator DisableMoveFunctionsCoroutine() {
         OnPlayerGetHit();
         while(true) {
@@ -51,25 +69,6 @@ public class PlayerState : MonoBehaviour
             }
             yield return null;
         }
-    }
-
-
-    private void SetAnimation() {
-        //PlayerMoveController.MoveState moveState = PlayerMoveController.GetPlayerMoveState();
-        //if(PlayerMoveController.MoveState.Idle == moveState) {
-        //    SetBoolToAnimator(true,false,false);
-        //} else if(PlayerMoveController.MoveState.Walk == moveState) {
-        //    SetBoolToAnimator(false, true, false);
-        //} else if(PlayerMoveController.MoveState.Run == moveState) {
-        //    SetBoolToAnimator(false, false, true);
-        //}
-        animator.SetInteger("Speed", PlayerMoveController.GetSpeed());
-    }
-
-    private void SetBoolToAnimator(bool IsIdle,bool IsWalking,bool IsRuning) {
-        animator.SetBool("IsIdle", IsIdle);
-        animator.SetBool("IsWalking", IsWalking);
-        animator.SetBool("IsRuning", IsRuning);
     }
 }
 

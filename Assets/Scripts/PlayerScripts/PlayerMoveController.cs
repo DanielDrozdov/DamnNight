@@ -44,6 +44,7 @@ public class PlayerMoveController : PlayerGetHitEventClass {
     public override void DisableAddFunctions() {
         speed = 0;
         totalStamina = staminaReserv;
+        StaminaBarController.UpdateStaminaBar();
     }
 
     private void StaminaControll() {
@@ -60,7 +61,7 @@ public class PlayerMoveController : PlayerGetHitEventClass {
 
     private void Move() {
         CalculateDirectionAndStaminaState();
-        Vector3 moveDir = transform.TransformDirection(new Vector3(joystick.Direction.x, 0, joystick.Direction.y));
+        Vector3 moveDir = transform.TransformDirection(new Vector3(joystick.Direction.x, -9.8f, joystick.Direction.y));
         _characterController.Move(moveDir * speed * Time.deltaTime);
     }
 

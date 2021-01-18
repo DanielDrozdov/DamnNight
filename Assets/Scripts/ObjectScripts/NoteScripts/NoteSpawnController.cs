@@ -5,9 +5,7 @@ using UnityEngine;
 public class NoteSpawnController : MonoBehaviour
 {
     public List<NoteAndKnifeObjManager> NoteSpawnPositions;
-    private static int _noteCount = 3;
-    private int _maxMainZoneNoteCount = 2;
-    private int _totalMainZoneNoteCount = 0;
+    private static int _noteCount = 2;
 
     void Start()
     {
