@@ -27,12 +27,6 @@ public class PlayerState : MonoBehaviour
         _totalLifes = _lifes;
     }
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.F)) {
-            Hit();
-        }
-    }
-
     public void Hit() {
         _totalLifes--;
         if(_totalLifes <= 0) {
