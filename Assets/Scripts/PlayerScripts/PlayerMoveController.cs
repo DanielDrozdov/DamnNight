@@ -32,7 +32,8 @@ public class PlayerMoveController : PlayerGetHitEventClass {
     void Start() {
         _characterController = GetComponent<CharacterController>();
         playerSoundController = PlayerSoundController.GetInstance();
-        totalStamina = staminaReserv;      
+        totalStamina = staminaReserv;
+        PlayerState.OnPlayerDie += DisablePlayerMove;
     }
 
     void Update() {
@@ -41,6 +42,21 @@ public class PlayerMoveController : PlayerGetHitEventClass {
         StaminaControll();
     }
 
+    public static int GetSpeed() {
+        return speed;
+    }
+
+    public static float GetStaminaReserv() {
+        return staminaReserv;
+    }
+
+    public static float GetTotalStamina() {
+        return totalStamina;
+    }
+
+    public static MoveState GetPlayerMoveState() {
+        return moveState;
+    }
     public override void DisableAddFunctions() {
         speed = 0;
         totalStamina = staminaReserv;
@@ -82,27 +98,16 @@ public class PlayerMoveController : PlayerGetHitEventClass {
         }
     }
 
-    public static int GetSpeed() {
-        return speed;
-    }
-
-    public static float GetStaminaReserv() {
-        return staminaReserv;
-    }
-
-    public static float GetTotalStamina() {
-        return totalStamina;
-    }
-
-    public static MoveState GetPlayerMoveState() {
-        return moveState;
-    }
-
     private void IsPlayerChangeSpeed() {
         if(oldMoveState != moveState) {
             oldMoveState = moveState;
             playerSoundController.EnableOrDisablePlatformSound(moveState);
         }
+    }
+
+    private void DisablePlayerMove() {
+        speed = 0;
+        enabled = false;
     }
 }
 

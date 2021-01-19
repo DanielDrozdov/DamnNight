@@ -21,6 +21,7 @@ public class PlayerState : MonoBehaviour
     public delegate void PlayerDelegate();
     public static event PlayerDelegate OnPlayerGetHit;
     public static event PlayerDelegate OnPlayerStandUpAfterGetHit;
+    public static event PlayerDelegate OnPlayerDie;
 
     private void Start()
     {
@@ -43,6 +44,7 @@ public class PlayerState : MonoBehaviour
         }
         MainCamera.gameObject.transform.position = EndCameraPos.position;
         MainCamera.cullingMask = cameraCullingMask;
+        OnPlayerDie();
         StartCoroutine(DelayLookAtAndDiePanel());
     }
 
@@ -73,14 +75,17 @@ public abstract class PlayerGetHitEventClass : MonoBehaviour {
         PlayerState.OnPlayerStandUpAfterGetHit += ActivateFunctions;
     }
 
+    public virtual void DisableAddFunctions() { }
+
+    public virtual void ActivateAddFunctions() { }
+
     public void DisableFunctions() {
         DisableAddFunctions();
         enabled = false;
     }
 
-    public virtual void DisableAddFunctions() {}
-
     public void ActivateFunctions() {
+        ActivateAddFunctions();
         enabled = true;
     }
 }

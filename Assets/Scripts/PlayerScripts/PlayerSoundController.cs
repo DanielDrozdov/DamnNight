@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSoundController : MonoBehaviour
-{
+public class PlayerSoundController : PlayerGetHitEventClass {
     public enum PlatformEnum {
         None,
         Wood
@@ -19,12 +18,27 @@ public class PlayerSoundController : MonoBehaviour
 
     private void Awake() {
         Instance = this;
+        PlayerState.OnPlayerGetHit += DisableFunctions;
+        PlayerState.OnPlayerStandUpAfterGetHit += ActivateFunctions;
+        PlayerState.OnPlayerDie += DisableAudio;
     }
 
     private PlayerSoundController() { }
 
     public static PlayerSoundController GetInstance() {
         return Instance;
+    }
+
+    public void EnableOrDisablePlatformSound(PlayerMoveController.MoveState moveState) {
+        if(platformEnum == PlatformEnum.Wood) {
+            PlayWoodAudio();
+        } else if(PlayerMoveController.MoveState.Walk == moveState) {
+            PlayGrassWalkAudio();
+        } else if(PlayerMoveController.MoveState.Run == moveState) {
+            PlayGrassRunAudio();
+        } else {
+            DisableAudio();
+        }
     }
 
     public void PlayWoodAudio() {
@@ -44,22 +58,20 @@ public class PlayerSoundController : MonoBehaviour
         platformEnum = PlatformEnum.None;
     }
 
-    public void EnableOrDisablePlatformSound(PlayerMoveController.MoveState moveState) {
-        if(platformEnum == PlatformEnum.Wood) {
-            PlayWoodAudio();
-        } else if(PlayerMoveController.MoveState.Walk == moveState) {
-            PlayGrassWalkAudio();
-        } else if(PlayerMoveController.MoveState.Run == moveState) {
-            PlayGrassRunAudio();
-        } else {
-            Source.clip = null;
-        }
-    }
-
     private void PlayAudio(AudioClip clip) {
         Source.clip = clip;
         Source.Play();
     }
 
+    private void DisableAudio() {
+        Source.clip = null;
+    }
 
+    public override void DisableAddFunctions() {
+        DisableAudio();
+    }
+
+    public override void ActivateAddFunctions() {
+        EnableOrDisablePlatformSound(PlayerMoveController.GetPlayerMoveState());
+    }
 }

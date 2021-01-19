@@ -30,7 +30,7 @@ public class MonsterMoveController : MonoBehaviour {
     }
 
     public void MoveToNextFarPoint() {
-        MoveToNextPosition(CheckNearestPointFromPlayer());
+        MoveToNextPosition(RandomNextPoint());
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -73,17 +73,9 @@ public class MonsterMoveController : MonoBehaviour {
         }
     }
 
-    private Vector3 CheckNearestPointFromPlayer() {
-        float minDistance = Vector3.Distance(player.position, MonsterSavePoints[0].position);
-        Vector3 minVector = MonsterSavePoints[0].position;
-        foreach(Transform vector in MonsterSavePoints) {
-            float distance = Vector3.Distance(player.position, vector.position);
-            if(distance < minDistance) {
-                minDistance = distance;
-                minVector = vector.position;
-            }
-        }
-        return minVector;
+    private Vector3 RandomNextPoint() {
+        Vector3 Vector = MonsterSavePoints[Random.Range(0,MonsterSavePoints.Length)].position;      
+        return Vector;
     }
 
 }
