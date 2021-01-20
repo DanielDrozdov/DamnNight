@@ -30,7 +30,7 @@ public class PlayerSoundController : PlayerGetHitEventClass {
     }
 
     public void EnableOrDisablePlatformSound(PlayerMoveController.MoveState moveState) {
-        if(platformEnum == PlatformEnum.Wood) {
+        if(platformEnum == PlatformEnum.Wood && (PlayerMoveController.MoveState.Walk == moveState || PlayerMoveController.MoveState.Run == moveState)) {
             PlayWoodAudio();
         } else if(PlayerMoveController.MoveState.Walk == moveState) {
             PlayGrassWalkAudio();

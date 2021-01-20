@@ -16,7 +16,7 @@ public class LoadSceneManager : MonoBehaviour
     }
 
     private IEnumerator WaitTwoSecondsCoroutine(AsyncOperation asyncOperation) {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         asyncOperation.allowSceneActivation = true;
     }
 }

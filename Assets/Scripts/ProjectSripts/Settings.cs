@@ -6,7 +6,6 @@ public class Settings : MonoBehaviour
 {
     private void Awake() {
         Camera.main.opaqueSortMode = UnityEngine.Rendering.OpaqueSortMode.NoDistanceSort;
-        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }
 }
