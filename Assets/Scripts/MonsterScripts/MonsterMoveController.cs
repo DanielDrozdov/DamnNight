@@ -15,6 +15,7 @@ public class MonsterMoveController : MonoBehaviour {
     private float _minHitDistance = 3f;
     private bool IsPlayerDetected;
     private bool IsPlayerHit;
+    private float _sphereColiderR = 35f;
 
     void Start() {
         navMesh = GetComponent<NavMeshAgent>();
@@ -74,7 +75,10 @@ public class MonsterMoveController : MonoBehaviour {
     }
 
     private Vector3 RandomNextPoint() {
-        Vector3 Vector = MonsterSavePoints[Random.Range(0,MonsterSavePoints.Length)].position;      
+        Vector3 Vector = MonsterSavePoints[Random.Range(0,MonsterSavePoints.Length)].position;
+        if(Vector3.Distance(Vector,seenPlayer.position) <= _sphereColiderR) {
+            return RandomNextPoint();
+        }
         return Vector;
     }
 

@@ -11,7 +11,7 @@ public class CameraFPSController : PlayerGetHitEventClass, IPointerDownHandler, 
     [HideInInspector]
     public bool Pressed;
 
-    private float sensivity = 0.5f;
+    private float sensivity = 0.3f;
     public readonly float maxVertDegrees = 60f;
     private float minimumVert;
     private float maximumVert;
@@ -58,13 +58,13 @@ public class CameraFPSController : PlayerGetHitEventClass, IPointerDownHandler, 
 
     private void CalculateXRotation(float delta) {
         _rotationY = Player.localEulerAngles.y + delta * sensivity;
-        Player.rotation = Quaternion.Lerp(Player.rotation, Quaternion.Euler(0, _rotationY, 0), 1);
+        Player.rotation = Quaternion.Lerp(Player.rotation, Quaternion.Euler(0, _rotationY, 0), 1f);
     }
 
     private void CalculateYRotation(float delta) {
         _rotationX -= delta * sensivity;
         _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
-        Camera.rotation = Quaternion.Lerp(Camera.rotation, Quaternion.Euler(_rotationX, _rotationY, 0), 1);
+        Camera.rotation = Quaternion.Lerp(Camera.rotation, Quaternion.Euler(_rotationX, _rotationY, 0), 1f);
     }
 
     private void SetFlashLightRotation() {
